@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+/// Controlador para mostrar e procurar localização
 final class RMLocationViewController: UIViewController {
 
     override func viewDidLoad() {
