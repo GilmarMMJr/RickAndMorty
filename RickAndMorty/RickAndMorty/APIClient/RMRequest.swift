@@ -76,7 +76,8 @@ class RMRequest {
         self.queryParameters = queryParameters
         self.httpMethod = httpMethod
     }
-    
+    /// Attempt to create request
+    ///  - Parameter url: URL to parse
     convenience init?(url: URL) {
         let string = url.absoluteString
         if !string.contains(Constants.baseUrl) {
@@ -86,9 +87,19 @@ class RMRequest {
         if trimmed.contains("/") {
             let components = trimmed.components(separatedBy: "/")
             if !components.isEmpty {
-                let endpointString = components[0]
-                if let rmEndpoint = RMEndpoint(rawValue: endpointString) {
+                let endpointString = components[0] //EndPoint
+                var patchComponents: [String] = []
+                if components.count > 1 {
+                    patchComponents = components
+                    patchComponents.removeFirst()
+                }
+                
+                if let rmEndpoint = RMEndpoint(
+                    rawValue: endpointString
+                    
+                ) {
                     self.init(endpoint: rmEndpoint,
+                              pathComponents: patchComponents,
                               httpMethod: .get)
                     return
                 }
